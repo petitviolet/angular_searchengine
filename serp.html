@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja" ng-app="Search">
+  <head>
+    <meta charset="UTF-8">
+    <title>google vs bing</title>
+    <!--link rel="stylesheet" href="./main.css"-->
+    <script type='text/javascript' charset='utf-8' src="./angular.min.js"></script>
+    <script type='text/javascript' charset='utf-8' src="./angular-resource.min.js"></script>
+    <script type='text/javascript' charset='utf-8' src='./secret_bing.js'></script>
+    <script type='text/javascript' charset='utf-8' src='./angular_searchengine.js'></script>
+  </head>
+  <body>
+    <h2 class="center">Google vs Bing</h2>
+    <div ng-controller="searchCtrl" >
+      <p class="center">
+        <form name="search_form" ng-submit="do_search(form.query)" novalidate>
+          <input type="text" placeholder="クエリ" ng-model="form.query" required>
+          <input type="submit" value="{{form.query||'クエリを入力'}}">
+          <span ng-show="search_form.$error.required">クエリを入力してください</span>
+        </form>
+      </p>
+
+      <p>
+        <input type="text" id="filter" ng-model="filter_result" placeholder="絞り込み">
+      </p>
+      <span class="loading" ng-show="{{searchCtrl.google_result.length || searchCtrl.bing_result.length}}">読込中...</span>
+      <div class="results">
+        <div id="google" ng-hide="searchCtrl.google_result.length" ng-repeat="r in google_result | filter:filter_result">
+          <ul>
+            <li>
+              <a href="{{r.url}}">{{r.title}}</a><br/>
+              <span>{{r.content}}</span>
+            </li>
+
+          </ul>
+        </div>
+        <hr>
+        <div id="bing" ng-hide="searchCtrl.bing_result.length" ng-repeat="r in bing_result | filter:filter_result">
+          <ul>
+            <li>
+              <a href="{{r.Url">{{r.Title}}</a><br/>
+              <span>{{r.Description}}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,43 @@
+body {
+  width: 100%;
+}
+
+#query, #button {
+  font-size: large;
+}
+.results {
+  display: table;
+  width: 100%;
+}
+
+#google {
+  display: table-cell;
+  border-right: solid 1px #CCCCCC;
+  padding-right: 10px;
+  width: 50%;
+}
+
+#bing {
+  display: table-cell;
+  border-left: solid 1px #DDDDDD;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 50%;
+}
+
+.elm {
+  padding-bottom: 10px;
+  margin: 3px !important;
+}
+.link_url {
+  font-size: small;
+  display: inline-block;
+  color: #339944;
+  width: 50%;
+}
+.center {
+  text-align: center;
+}
+.loading {
+  display: none;
+}
