@@ -1,1 +1,1 @@
-*[http://angularjs.org/:title=AngularJS]を使ったサンプル
+# [AngularJSを使ったサンプル]( http://angularjs.org/ )
