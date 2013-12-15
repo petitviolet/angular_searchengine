@@ -3,15 +3,18 @@
   <head>
     <meta charset="UTF-8">
     <title>google vs bing</title>
-    <!--link rel="stylesheet" href="./main.css"-->
-    <script type='text/javascript' charset='utf-8' src="./angular.min.js"></script>
-    <script type='text/javascript' charset='utf-8' src="./angular-resource.min.js"></script>
-    <script type='text/javascript' charset='utf-8' src='./secret_bing.js'></script>
-    <script type='text/javascript' charset='utf-8' src='./angular_searchengine.js'></script>
+    <link rel="stylesheet" href="./main.css">
+    <script type='text/javascript' src="./js/angular.min.js"></script>
+    <script type='text/javascript' src="./js/angular-resource.min.js"></script>
+    <script type='text/javascript' src="./js/angular-sanitize.min.js"></script>
+    <script type='text/javascript' src='./js/secret_bing.js'></script>
+    <script type='text/javascript' src='./js/app.js'></script>
+    <script type='text/javascript' src='./js/controllers.js'></script>
+    <script type='text/javascript' src='./js/services.js'></script>
   </head>
-  <body>
+  <body ng-controller="searchCtrl" >
     <h2 class="center">Google vs Bing</h2>
-    <div ng-controller="searchCtrl" >
+    <div>
       <p class="center">
         <form name="search_form" ng-submit="do_search(form.query)" novalidate>
           <input type="text" placeholder="クエリ" ng-model="form.query" required>
@@ -23,25 +26,19 @@
       <p>
         <input type="text" id="filter" ng-model="filter_result" placeholder="絞り込み">
       </p>
-      <span class="loading" ng-show="{{searchCtrl.google_result.length || searchCtrl.bing_result.length}}">読込中...</span>
+      <span class="loading" ng-show="is_loading">読込中...</span>
       <div class="results">
-        <div id="google" ng-hide="searchCtrl.google_result.length" ng-repeat="r in google_result | filter:filter_result">
-          <ul>
-            <li>
-              <a href="{{r.url}}">{{r.title}}</a><br/>
-              <span>{{r.content}}</span>
-            </li>
-
-          </ul>
+        <div id="google">
+          <li ng-show="google_result.length" ng-repeat="r in google_result | filter:filter_result">
+            <a href="{{r.url}}" target="_blank"><span ng-bind-html="r.title"></span></a><br/>
+            <span ng-bind-html="r.content"></span>
+          </li>
         </div>
-        <hr>
-        <div id="bing" ng-hide="searchCtrl.bing_result.length" ng-repeat="r in bing_result | filter:filter_result">
-          <ul>
-            <li>
-              <a href="{{r.Url">{{r.Title}}</a><br/>
-              <span>{{r.Description}}</span>
-            </li>
-          </ul>
+        <div id="bing">
+          <li ng-show="bing_result.length" ng-repeat="r in bing_result | filter:filter_result">
+            <a href="{{r.Url}}" target="_blank">{{r.Title}}</a><br/>
+            <span>{{r.Description}}</span>
+          </li>
         </div>
       </div>
     </div>

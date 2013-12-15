@@ -7,14 +7,15 @@
  * usernameとpasswordをfilereaderとか使って何とかする
  */
 
-var Search = angular.module('Search', ['ngResource']);
-
-Search.controller('searchCtrl', ['$scope', '$resource', '$http', function($scope, $resource, $http) {
-  // console.dir($scope);
+angular.module('Search', ['ngResource'])
+.controller('searchCtrl', ['$scope', '$resource', '$http', function($scope, $resource, $http) {
   var google_url = 'https://ajax.googleapis.com/ajax/services/search/web' +
   '?v=1.0&hl=ja&rsz=8&callback=JSON_CALLBACK&q=:query';
   var bing_url = "https://api.datamarket.azure.com/Bing/Search/Web?" +
   "$format=json&$top=8&Query=:query";
+  $scope.is_loading = false;
+  console.dir($scope);
+
 
   // 検索結果格納用
   $scope.google_result = "";
@@ -23,13 +24,16 @@ Search.controller('searchCtrl', ['$scope', '$resource', '$http', function($scope
   // google, bingの検索結果を表示する
   $scope.do_search = function(query) {
     // submitしないように
-    event.preventDefault();
+    // firefoxだと動かない...
+    // chromeだと動く
+    // event.preventDefault();
 
     // クエリが無ければ終了
     if (!query) {
       alert('クエリを入力してください');
-      return;
+      return false;
     }
+    $scope.is_loading = true;
 
     // googleにjsonpでリクエスト
     // $http.jsonp(google_url + query)
@@ -77,5 +81,7 @@ Search.controller('searchCtrl', ['$scope', '$resource', '$http', function($scope
         console.dir(config);
       }
     );
+    $scope.is_loading = false;
+    return false;
   };
 }]);
